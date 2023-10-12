@@ -1,8 +1,14 @@
 package jm.task.core.jdbc.util;
 
+import jm.task.core.jdbc.model.User;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Util {
     // реализуйте настройку соеденения с БД
@@ -31,5 +37,23 @@ public class Util {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static SessionFactory sessionFactory;
+
+    public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            Properties properties = new Properties();
+            properties.setProperty(Environment.URL, url);
+            properties.setProperty(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+            properties.setProperty(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
+            properties.setProperty(Environment.USER, userName);
+            properties.setProperty(Environment.PASS, password);
+            sessionFactory = new Configuration()
+                    .addProperties(properties)
+                    .addAnnotatedClass(User.class)
+                    .buildSessionFactory();
+        }
+        return sessionFactory;
     }
 }

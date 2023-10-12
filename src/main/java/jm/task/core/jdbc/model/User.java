@@ -1,15 +1,11 @@
 package jm.task.core.jdbc.model;
 
-import jm.task.core.jdbc.util.Util;
+import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
+@Entity
 @Table
 public class User {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
@@ -67,10 +63,11 @@ public class User {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(" name = ").append(name)
+        sb.append("{id = ").append(id)
+                .append(" name = ").append(name)
                 .append(" lastName = ").append(lastName)
                 .append(" age = ").append(age)
-                .append("\n");
-        return String.valueOf(sb);
+                .append("}");
+        return sb.toString();
     }
 }
