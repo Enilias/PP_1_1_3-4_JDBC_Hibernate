@@ -1,5 +1,7 @@
 package jm.task.core.jdbc.model;
 
+import org.hibernate.Session;
+
 import javax.persistence.*;
 
 @Entity
