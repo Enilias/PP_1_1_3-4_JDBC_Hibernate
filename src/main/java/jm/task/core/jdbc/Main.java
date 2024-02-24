@@ -10,12 +10,13 @@ public class Main {
         UserService userService = new UserServiceImpl();
 
         userService.createUsersTable();
-        userService.test();
+        // userService.test();
 
 //        userService.saveUser("Lina","A", (byte) 1);
 //        userService.saveUser("Olya","B", (byte) 2);
 //        userService.saveUser("Ai","C", (byte) 3);
 //        userService.saveUser("Vika","D", (byte) 4);
+        userService.update(1L, "WQDWCFWDCF", "IKJIK", (byte) 5);
 
         System.out.println(userService.getAllUsers());
 
@@ -23,7 +24,6 @@ public class Main {
 //        userService.dropUsersTable();
 
         //Util.closeConnection();
-
 
 
     }

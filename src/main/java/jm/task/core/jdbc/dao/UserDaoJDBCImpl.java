@@ -15,12 +15,47 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void test() {
-        try {
-            Statement statement = connection.createStatement();
-            statement.execute("ALTER TABLE user ADD dogs varchar(255);");
+        try (Statement statement = connection.createStatement()) {
+            // statement.execute("ALTER TABLE user ADD dogs varchar(255);");
+            // statement.execute("ALTER TABLE user DROP COLUMN dogs");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void update(Long id, String name, String lastName, byte age) {
+        try (PreparedStatement ps = connection
+                .prepareStatement("UPDATE user SET name = ?, lastName = ?, age = ? WHERE id = ?;")) {
+            ps.setString(1, name);
+            ps.setString(2, lastName);
+            ps.setByte(3, age);
+            ps.setLong(4, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public List<User> UniqueValue() {
+        List<User> userList = null;
+        try (Statement statement = connection.createStatement()) {
+            userList = new ArrayList<>();
+            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT name,lastname,age FROM user;");
+            while (resultSet.next()) {
+                userList.add(new User(
+                        resultSet.getLong("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("lastName"),
+                        resultSet.getByte("age")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userList;
     }
 
     public void createUsersTable() {
@@ -70,6 +105,7 @@ public class UserDaoJDBCImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM pre_project.user;");
             while (resultSet.next()) {
                 userList.add(new User(
+                        resultSet.getLong("id"),
                         resultSet.getString("name"),
                         resultSet.getString("lastName"),
                         resultSet.getByte("age")));

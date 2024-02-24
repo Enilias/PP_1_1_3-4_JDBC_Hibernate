@@ -9,12 +9,15 @@ public interface UserService {
 
     void dropUsersTable();
 
-    void saveUser(String name, String lastName, byte age);
+    void saveUser(Long id, String name, String lastName, byte age);
 
     void removeUserById(long id);
 
     List<User> getAllUsers();
 
     void cleanUsersTable();
+
+    public void update(Long id, String name, String lastName, byte age);
+
     void test();
 }

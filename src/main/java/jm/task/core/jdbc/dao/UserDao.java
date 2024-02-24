@@ -16,5 +16,9 @@ public interface UserDao {
     List<User> getAllUsers();
 
     void cleanUsersTable();
+
+    List<User> UniqueValue();
+    public void update(Long id,String name, String lastName, byte age);
+
     void test();
 }

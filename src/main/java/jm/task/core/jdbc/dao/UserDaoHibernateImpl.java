@@ -69,6 +69,16 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
+    public List<User> UniqueValue() {
+        return null;
+    }
+
+    @Override
+    public void update(Long id, String name, String lastName, byte age) {
+
+    }
+
+    @Override
     public void test() {
 
     }

@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
         userDao.dropUsersTable();
     }
 
-    public void saveUser(String name, String lastName, byte age) {
+    public void saveUser(Long id, String name, String lastName, byte age) {
         userDao.saveUser(name, lastName, age);
 
     }
@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
 
     public void cleanUsersTable() {
         userDao.cleanUsersTable();
+    }
+
+    @Override
+    public void update(Long id, String name, String lastName, byte age) {
+        userDao.update(id,name, lastName, age);
     }
 
     public void test() {
