@@ -67,4 +67,9 @@ public class UserDaoHibernateImpl implements UserDao {
         session.getTransaction().commit();
         session.close();
     }
+
+    @Override
+    public void test() {
+
+    }
 }

@@ -10,16 +10,17 @@ public class Main {
         UserService userService = new UserServiceImpl();
 
         userService.createUsersTable();
+        userService.test();
 
-        userService.saveUser("Lina","A", (byte) 1);
-        userService.saveUser("Olya","B", (byte) 2);
-        userService.saveUser("Ai","C", (byte) 3);
-        userService.saveUser("Vika","D", (byte) 4);
+//        userService.saveUser("Lina","A", (byte) 1);
+//        userService.saveUser("Olya","B", (byte) 2);
+//        userService.saveUser("Ai","C", (byte) 3);
+//        userService.saveUser("Vika","D", (byte) 4);
 
         System.out.println(userService.getAllUsers());
 
-        userService.cleanUsersTable();
-        userService.dropUsersTable();
+//        userService.cleanUsersTable();
+//        userService.dropUsersTable();
 
         //Util.closeConnection();
 

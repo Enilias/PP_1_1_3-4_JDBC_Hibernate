@@ -14,11 +14,20 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
+    public void test() {
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute("ALTER TABLE user ADD dogs varchar(255);");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS user(id BIGINT PRIMARY KEY AUTO_INCREMENT," +
                     "name VARCHAR(50), lastName VARCHAR(50), age TINYINT);");
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -34,9 +43,9 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         try (PreparedStatement ps = connection
                 .prepareStatement("INSERT INTO user(name, lastName, age) VALUES (?, ?, ?);")) {
-            ps.setString(1,name);
-            ps.setString(2,lastName);
-            ps.setByte(3,age);
+            ps.setString(1, name);
+            ps.setString(2, lastName);
+            ps.setByte(3, age);
             ps.executeUpdate();
 
         } catch (SQLException e) {
