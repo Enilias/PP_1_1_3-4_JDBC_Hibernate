@@ -1,6 +1,7 @@
 package jm.task.core.jdbc.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -17,6 +18,8 @@ public class User {
 
     @Column
     private Byte age;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Dog> dogs;
 
     public User() {
 
@@ -33,6 +36,13 @@ public class User {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
+    }
+
+    public User(String name, String lastName, Byte age, List<Dog> dogs) {
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
+        this.dogs = dogs;
     }
 
     public Long getId() {
@@ -65,6 +75,14 @@ public class User {
 
     public void setAge(Byte age) {
         this.age = age;
+    }
+
+    public List<Dog> getDogs() {
+        return dogs;
+    }
+
+    public void setDogs(List<Dog> dogs) {
+        this.dogs = dogs;
     }
 
     @Override
