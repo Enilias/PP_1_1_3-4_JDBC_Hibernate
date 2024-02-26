@@ -19,6 +19,13 @@ public class DogDaoJDBCImpl implements DogDao {
             e.printStackTrace();
         }
     }
+    public void dropDogTable() {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute("DROP TABLE IF EXISTS dog");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void saveDog(String name, byte age, long user_id) {
@@ -33,5 +40,13 @@ public class DogDaoJDBCImpl implements DogDao {
             e.printStackTrace();
         }
         System.out.printf("User с именем – %s добавлен в базу данных\n", name);
+    }
+    public static void cleanUsersTable() {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute("TRUNCATE TABLE user");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -18,7 +18,16 @@ public class User {
 
     @Column
     private Byte age;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "communication_tables",joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "dog_id"))
+    /*
+    https://www.baeldung.com/jpa-many-to-many
+    Обратите внимание, что использование @JoinTable  или даже @JoinColumn не требуется.
+    JPA сгенерирует для нас имена таблиц и столбцов.
+    Однако стратегия, которую использует JPA, не всегда соответствует используемым нами соглашениям об именах.
+    Итак, нам нужна возможность настройки имен таблиц и столбцов.
+     */
     private List<Dog> dogs;
 
     public User() {

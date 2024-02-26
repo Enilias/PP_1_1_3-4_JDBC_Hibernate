@@ -17,4 +17,9 @@ public class DogServiceImpl implements DogService {
     public void saveDog(String name, byte age) {
 
     }
+
+    @Override
+    public void dropDogTable() {
+        dogDao.dropDogTable();
+    }
 }

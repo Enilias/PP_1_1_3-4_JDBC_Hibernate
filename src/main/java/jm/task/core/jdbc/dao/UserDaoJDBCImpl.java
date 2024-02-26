@@ -80,9 +80,24 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    public static void createCommunicationTables() {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute("CREATE TABLE communication_tables (" +
+                    "    user_id BIGINT,\n" +
+                    "    dog_id BIGINT,\n" +
+                    "    PRIMARY KEY (user_id, dog_id)," +
+                    "    FOREIGN KEY (user_id) REFERENCES user(id)," +
+                    "    FOREIGN KEY (dog_id) REFERENCES dog(id)" +
+                    ");");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void dropUsersTable() {
         try (Statement statement = connection.createStatement()) {
             statement.execute("DROP TABLE IF EXISTS user");
+            statement.execute("DROP TABLE IF EXISTS communication_tables");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -106,29 +121,36 @@ public class UserDaoJDBCImpl implements UserDao {
         try {
             // Сначала добавляем пользователя
             PreparedStatement psUser = connection
-                    .prepareStatement("INSERT INTO user(name, lastName, age) VALUES (?, ?, ?);");
+                    .prepareStatement("INSERT INTO user(name, lastName, age) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             psUser.setString(1, name);
             psUser.setString(2, lastName);
             psUser.setByte(3, age);
             psUser.executeUpdate();
 
-            // Получаем ID только что добавленного пользователя
+            ResultSet rsUser = psUser.getGeneratedKeys();
+            rsUser.next();
+            Long userId = rsUser.getLong(1);
 
-           // long userId = getAllUsers().get(getAllUsers().size()-1).getId();
-
-            // Теперь добавляем собаку, связанную с этим пользователем
             PreparedStatement psDog = connection
-                    .prepareStatement("INSERT INTO dog(name, age) VALUES (?, ?);");
+                    .prepareStatement("INSERT INTO dog(name, age) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);
             psDog.setString(1, dogName);
             psDog.setByte(2, dogAge);
-            //psDog.setLong(3, userId);
             psDog.executeUpdate();
 
+            ResultSet rsDog = psDog.getGeneratedKeys();
+            rsDog.next();
+            Long dogId = rsDog.getLong(1);
+
+            PreparedStatement psRelation = connection
+                    .prepareStatement("INSERT INTO communication_tables(user_id, dog_id) VALUES (?, ?);");
+            psRelation.setLong(1, userId);
+            psRelation.setLong(2, dogId);
+            psRelation.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.printf("User с именем – %s добавлен в базу данных\n", name);
+        System.out.printf("User с именем – %s и его собака добавлены в базу данных\n", name);
     }
 
 
@@ -158,27 +180,28 @@ public class UserDaoJDBCImpl implements UserDao {
         }
         return userList;
     }
-    private List<Dog> getDogsForUser(Long userId) {
-        List<Dog> dogs = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM dog WHERE user_id = ?")) {
-            ps.setLong(1, userId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                dogs.add(new Dog(
-                        rs.getLong("id"),
-                        rs.getString("name"),
-                        rs.getString("breed"),
-                        rs.getLong("user_id")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return dogs;
-    }
+//    private List<Dog> getDogsForUser(Long userId) {
+//        List<Dog> dogs = new ArrayList<>();
+//        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM dog WHERE user_id = ?")) {
+//            ps.setLong(1, userId);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                dogs.add(new Dog(
+//                        rs.getLong("id"),
+//                        rs.getString("name"),
+//                        rs.getString("breed"),
+//                        rs.getLong("user_id")));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return dogs;
+//    }
 
     public void cleanUsersTable() {
         try (Statement statement = connection.createStatement()) {
             statement.execute("TRUNCATE TABLE user");
+            statement.execute("TRUNCATE TABLE communication_tables");
         } catch (SQLException e) {
             e.printStackTrace();
         }

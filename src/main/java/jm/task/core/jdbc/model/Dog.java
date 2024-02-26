@@ -1,6 +1,7 @@
 package jm.task.core.jdbc.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -12,21 +13,19 @@ public class Dog {
     private String name;
     @Column
     private Byte age;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany(mappedBy = "dogs")
+    private List<User> users;
 
-    public Dog(Long id, String name, Byte age, User user) {
+    public Dog(Long id, String name, Byte age, List<User> users) {
         this.id = id;
         this.name = name;
         this.age = age;
-        this.user = user;
+        this.users = users;
     }
 
     public Dog(String name, Byte age) {
         this.name = name;
         this.age = age;
-       // this.user = user;
     }
 
     public Dog() {
@@ -57,11 +56,11 @@ public class Dog {
         this.age = age;
     }
 
-    public User getUser() {
-        return user;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

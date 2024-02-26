@@ -8,5 +8,6 @@ public interface DogDao {
     void createDogTable();
 
     void saveDog(String name, byte age, long user_id);
+    public void dropDogTable();
 
 }
