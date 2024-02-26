@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.dao;
 
+import jm.task.core.jdbc.model.Dog;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
@@ -75,6 +76,11 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void update(Long id, String name, String lastName, byte age) {
+
+    }
+
+    @Override
+    public void saveUserAndDog(String name, String lastName, byte age, String dogName, byte dogAge) {
 
     }
 

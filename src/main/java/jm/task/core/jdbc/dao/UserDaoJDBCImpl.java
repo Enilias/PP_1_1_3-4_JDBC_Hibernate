@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.dao;
 
+import jm.task.core.jdbc.model.Dog;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
@@ -18,6 +19,18 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
             // statement.execute("ALTER TABLE user ADD dogs varchar(255);");
             // statement.execute("ALTER TABLE user DROP COLUMN dogs");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void test2() {
+        try (Statement statement = connection.createStatement()) {
+            // statement.execute("ALTER TABLE user ADD dogs varchar(255);");
+            // statement.execute("ALTER TABLE user DROP COLUMN dogs");
+            // statement.execute("SELECT * FROM user JOIN dog ON user ")
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,6 +102,36 @@ public class UserDaoJDBCImpl implements UserDao {
         System.out.printf("User с именем – %s добавлен в базу данных\n", name);
     }
 
+    public void saveUserAndDog(String name, String lastName, byte age, String dogName, byte dogAge) {
+        try {
+            // Сначала добавляем пользователя
+            PreparedStatement psUser = connection
+                    .prepareStatement("INSERT INTO user(name, lastName, age) VALUES (?, ?, ?);");
+            psUser.setString(1, name);
+            psUser.setString(2, lastName);
+            psUser.setByte(3, age);
+            psUser.executeUpdate();
+
+            // Получаем ID только что добавленного пользователя
+
+           // long userId = getAllUsers().get(getAllUsers().size()-1).getId();
+
+            // Теперь добавляем собаку, связанную с этим пользователем
+            PreparedStatement psDog = connection
+                    .prepareStatement("INSERT INTO dog(name, age) VALUES (?, ?);");
+            psDog.setString(1, dogName);
+            psDog.setByte(2, dogAge);
+            //psDog.setLong(3, userId);
+            psDog.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.printf("User с именем – %s добавлен в базу данных\n", name);
+    }
+
+
     public void removeUserById(long id) {
         try (PreparedStatement ps = connection.prepareStatement("DELETE FROM user WHERE id = ?")) {
             ps.setLong(1, id);
@@ -114,6 +157,23 @@ public class UserDaoJDBCImpl implements UserDao {
             e.printStackTrace();
         }
         return userList;
+    }
+    private List<Dog> getDogsForUser(Long userId) {
+        List<Dog> dogs = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM dog WHERE user_id = ?")) {
+            ps.setLong(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                dogs.add(new Dog(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("breed"),
+                        rs.getLong("user_id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dogs;
     }
 
     public void cleanUsersTable() {

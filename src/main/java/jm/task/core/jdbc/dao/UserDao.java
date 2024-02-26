@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.dao;
 
+import jm.task.core.jdbc.model.Dog;
 import jm.task.core.jdbc.model.User;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public interface UserDao {
 
     List<User> UniqueValue();
     public void update(Long id,String name, String lastName, byte age);
+    public void saveUserAndDog(String name, String lastName, byte age, String dogName, byte dogAge);
 
     void test();
 }

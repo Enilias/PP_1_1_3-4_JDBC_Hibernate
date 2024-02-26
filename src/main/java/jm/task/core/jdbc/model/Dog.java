@@ -23,6 +23,12 @@ public class Dog {
         this.user = user;
     }
 
+    public Dog(String name, Byte age) {
+        this.name = name;
+        this.age = age;
+       // this.user = user;
+    }
+
     public Dog() {
 
     }

@@ -92,6 +92,7 @@ public class User {
                 .append(" name = ").append(name)
                 .append(" lastName = ").append(lastName)
                 .append(" age = ").append(age)
+                .append(" dog = ").append(dogs)
                 .append("}");
         return sb.toString();
     }
