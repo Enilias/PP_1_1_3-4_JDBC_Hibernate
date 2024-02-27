@@ -18,7 +18,7 @@ public class Main {
 
         userService.createUsersTable();
         dogService.createDogTable();
-        UserDaoJDBCImpl.createCommunicationTables();
+        userService.createCommunicationTables();
         // userService.test();
 
 //        userService.saveUser("Lina","A", (byte) 1);
@@ -31,11 +31,19 @@ public class Main {
 
         System.out.println(userService.getAllUsers());
 
-        DogDaoJDBCImpl.cleanUsersTable();
-        userService.cleanUsersTable();
-        userService.dropUsersTable();
-        dogService.dropDogTable();
-        Util.closeConnection();
+//        userService.cleanCommunicationTables();
+//        userService.dropCommunicationTables();
+//
+//        userService.cleanUsersTable();
+//        userService.dropUsersTable();
+//
+//        dogService.createDogTable();
+//        dogService.dropDogTable();
+
+
+        //userService.dropCommunicationTables();
+        //dogService.dropDogTable();
+        //Util.closeConnection();
 
         //Util.closeConnection();
 

@@ -15,28 +15,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-    public void test() {
-        try (Statement statement = connection.createStatement()) {
-            // statement.execute("ALTER TABLE user ADD dogs varchar(255);");
-            // statement.execute("ALTER TABLE user DROP COLUMN dogs");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void test2() {
-        try (Statement statement = connection.createStatement()) {
-            // statement.execute("ALTER TABLE user ADD dogs varchar(255);");
-            // statement.execute("ALTER TABLE user DROP COLUMN dogs");
-            // statement.execute("SELECT * FROM user JOIN dog ON user ")
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void update(Long id, String name, String lastName, byte age) {
         try (PreparedStatement ps = connection
                 .prepareStatement("UPDATE user SET name = ?, lastName = ?, age = ? WHERE id = ?;")) {
@@ -80,9 +58,9 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-    public static void createCommunicationTables() {
+    public void createCommunicationTables() {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("CREATE TABLE communication_tables (" +
+            statement.execute("CREATE TABLE IF NOT EXISTS  communication_tables (" +
                     "    user_id BIGINT,\n" +
                     "    dog_id BIGINT,\n" +
                     "    PRIMARY KEY (user_id, dog_id)," +
@@ -94,10 +72,17 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    public void dropCommunicationTables() {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute("DROP TABLE IF EXISTS communication_tables");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void dropUsersTable() {
         try (Statement statement = connection.createStatement()) {
             statement.execute("DROP TABLE IF EXISTS user");
-            statement.execute("DROP TABLE IF EXISTS communication_tables");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -180,31 +165,19 @@ public class UserDaoJDBCImpl implements UserDao {
         }
         return userList;
     }
-//    private List<Dog> getDogsForUser(Long userId) {
-//        List<Dog> dogs = new ArrayList<>();
-//        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM dog WHERE user_id = ?")) {
-//            ps.setLong(1, userId);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//                dogs.add(new Dog(
-//                        rs.getLong("id"),
-//                        rs.getString("name"),
-//                        rs.getString("breed"),
-//                        rs.getLong("user_id")));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return dogs;
-//    }
 
     public void cleanUsersTable() {
         try (Statement statement = connection.createStatement()) {
             statement.execute("TRUNCATE TABLE user");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void cleanCommunicationTables() {
+        try (Statement statement = connection.createStatement()) {
             statement.execute("TRUNCATE TABLE communication_tables");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 }

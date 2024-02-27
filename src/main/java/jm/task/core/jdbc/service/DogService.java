@@ -5,4 +5,5 @@ public interface DogService {
 
     void saveDog(String name, byte age);
     public void dropDogTable();
+    void cleanUsersTable();
 }

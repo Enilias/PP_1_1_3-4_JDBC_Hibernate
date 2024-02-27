@@ -1,9 +1,7 @@
 package jm.task.core.jdbc.service;
 
 import jm.task.core.jdbc.dao.UserDao;
-import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
-import jm.task.core.jdbc.model.Dog;
 import jm.task.core.jdbc.model.User;
 
 import java.util.List;
@@ -15,8 +13,16 @@ public class UserServiceImpl implements UserService {
         userDao.createUsersTable();
     }
 
+    public void createCommunicationTables() {
+        userDao.createCommunicationTables();
+    }
+
     public void dropUsersTable() {
         userDao.dropUsersTable();
+    }
+
+    public void dropCommunicationTables() {
+        userDao.dropCommunicationTables();
     }
 
     public void saveUser(String name, String lastName, byte age) {
@@ -36,6 +42,10 @@ public class UserServiceImpl implements UserService {
         userDao.cleanUsersTable();
     }
 
+    public void cleanCommunicationTables() {
+        userDao.cleanCommunicationTables();
+    }
+
     @Override
     public void update(Long id, String name, String lastName, byte age) {
         userDao.update(id, name, lastName, age);
@@ -48,9 +58,5 @@ public class UserServiceImpl implements UserService {
         } else {
             System.out.println("Возрост не коректный");
         }
-    }
-
-    public void test() {
-        userDao.test();
     }
 }

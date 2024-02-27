@@ -7,8 +7,10 @@ import java.util.List;
 
 public interface UserService {
     void createUsersTable();
+    void createCommunicationTables();
 
     void dropUsersTable();
+    void dropCommunicationTables();
 
     void saveUser( String name, String lastName, byte age);
 
@@ -17,9 +19,8 @@ public interface UserService {
     List<User> getAllUsers();
 
     void cleanUsersTable();
+    void cleanCommunicationTables();
 
     public void update(Long id, String name, String lastName, byte age);
     public void saveUserAndDog(String name, String lastName, int age, String dogName, int dogAge);
-
-    void test();
 }

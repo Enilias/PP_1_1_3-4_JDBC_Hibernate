@@ -22,4 +22,9 @@ public class DogServiceImpl implements DogService {
     public void dropDogTable() {
         dogDao.dropDogTable();
     }
+
+    @Override
+    public void cleanUsersTable() {
+        dogDao.cleanUsersTable();
+    }
 }

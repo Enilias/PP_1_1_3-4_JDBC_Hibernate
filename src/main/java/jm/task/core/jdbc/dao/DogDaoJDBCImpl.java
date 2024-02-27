@@ -30,20 +30,19 @@ public class DogDaoJDBCImpl implements DogDao {
     @Override
     public void saveDog(String name, byte age, long user_id) {
         try (PreparedStatement ps = connection
-                .prepareStatement("INSERT INTO user(name, age, user_id) VALUES (?, ?, ?);")) {
+                .prepareStatement("INSERT INTO dog(name, age) VALUES (?, ?);")) {
             ps.setString(1, name);
             ps.setByte(2, age);
-            ps.setLong(3, user_id);
             ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.printf("User с именем – %s добавлен в базу данных\n", name);
+        System.out.printf("Dog с именем – %s добавлен в базу данных\n", name);
     }
-    public static void cleanUsersTable() {
+    public void cleanUsersTable() {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("TRUNCATE TABLE user");
+            statement.execute("TRUNCATE TABLE dog");
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -17,11 +17,15 @@ public interface UserDao {
     List<User> getAllUsers();
 
     void cleanUsersTable();
+    void cleanCommunicationTables();
 
     List<User> UniqueValue();
-    void update(Long id,String name, String lastName, byte age);
+
+    void update(Long id, String name, String lastName, byte age);
+
     void saveUserAndDog(String name, String lastName, byte age, String dogName, byte dogAge);
 
+    void createCommunicationTables();
 
-    void test();
+    void dropCommunicationTables();
 }

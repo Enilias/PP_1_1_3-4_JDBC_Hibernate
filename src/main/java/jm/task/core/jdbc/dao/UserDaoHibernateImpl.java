@@ -70,6 +70,11 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
+    public void cleanCommunicationTables() {
+
+    }
+
+    @Override
     public List<User> UniqueValue() {
         return null;
     }
@@ -85,7 +90,12 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public void test() {
+    public void createCommunicationTables() {
+
+    }
+
+    @Override
+    public void dropCommunicationTables() {
 
     }
 }
