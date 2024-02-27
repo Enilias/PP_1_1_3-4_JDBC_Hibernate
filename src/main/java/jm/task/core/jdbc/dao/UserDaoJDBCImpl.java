@@ -52,7 +52,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS user(id BIGINT PRIMARY KEY AUTO_INCREMENT," +
-                    "name VARCHAR(50), lastName VARCHAR(50), age TINYINT);");
+                    "name VARCHAR(50),  lastName  VARCHAR(50) NOT NULL , age TINYINT CHECK(age>-1));");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,7 +104,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUserAndDog(String name, String lastName, byte age, String dogName, byte dogAge) {
         try {
-            // Сначала добавляем пользователя
             PreparedStatement psUser = connection
                     .prepareStatement("INSERT INTO user(name, lastName, age) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             psUser.setString(1, name);
@@ -175,8 +174,6 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
 
-
-
     public void cleanUsersTable() {
         try (Statement statement = connection.createStatement()) {
             statement.execute("TRUNCATE TABLE user");
@@ -184,6 +181,7 @@ public class UserDaoJDBCImpl implements UserDao {
             e.printStackTrace();
         }
     }
+
     public void cleanCommunicationTables() {
         try (Statement statement = connection.createStatement()) {
             statement.execute("TRUNCATE TABLE communication_tables");

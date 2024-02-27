@@ -22,6 +22,7 @@ public class Dog {
         this.age = age;
         this.users = users;
     }
+
     public Dog(Long id, String name, Byte age) {
         this.id = id;
         this.name = name;

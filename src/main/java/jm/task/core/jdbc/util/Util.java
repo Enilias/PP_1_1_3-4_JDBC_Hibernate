@@ -13,7 +13,9 @@ import java.util.Properties;
 public class Util {
     // реализуйте настройку соеденения с БД
     private static Connection connection;
-    private static final String url = "jdbc:mysql://localhost:3306/pre_project";
+    private static final String url1 = "jdbc:mysql://localhost:3306/pre_project";
+    private static final String url2 = "jdbc:postgresql://localhost:5432/pre_project";
+
     private static final String userName = "root";
     private static final String password = "enias";
 
@@ -21,7 +23,7 @@ public class Util {
         if (connection == null) {
             try {
                 connection = DriverManager
-                        .getConnection(url, userName, password);
+                        .getConnection(url1, userName, password);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -44,7 +46,7 @@ public class Util {
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             Properties properties = new Properties();
-            properties.setProperty(Environment.URL, url);
+            properties.setProperty(Environment.URL, url1);
             properties.setProperty(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
             properties.setProperty(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
             properties.setProperty(Environment.USER, userName);
