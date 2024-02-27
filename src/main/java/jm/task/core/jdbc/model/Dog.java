@@ -13,14 +13,19 @@ public class Dog {
     private String name;
     @Column
     private Byte age;
+    /*
     @ManyToMany(mappedBy = "dogs")
     private List<User> users;
+    */
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
 
-    public Dog(Long id, String name, Byte age, List<User> users) {
+    public Dog(Long id, String name, Byte age, User user) {
         this.id = id;
         this.name = name;
         this.age = age;
-        this.users = users;
+        this.user = user;
     }
 
     public Dog(Long id, String name, Byte age) {
@@ -62,12 +67,12 @@ public class Dog {
         this.age = age;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public User getUsers() {
+        return user;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUsers(User user) {
+        this.user = user;
     }
 
     @Override
@@ -76,6 +81,7 @@ public class Dog {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", user=" + user.getName() +
                 '}';
     }
 }

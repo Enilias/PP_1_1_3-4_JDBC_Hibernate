@@ -14,7 +14,8 @@ public class DogDaoJDBCImpl implements DogDao {
     public void createDogTable() {
         try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS dog(id BIGINT PRIMARY KEY AUTO_INCREMENT," +
-                    "name VARCHAR(50), age TINYINT);");
+                    "name VARCHAR(50), age TINYINT, user_id BIGINT," +
+                    "FOREIGN KEY (user_id) REFERENCES user(id));");
         } catch (SQLException e) {
             e.printStackTrace();
         }

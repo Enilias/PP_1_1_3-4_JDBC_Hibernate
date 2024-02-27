@@ -18,6 +18,7 @@ public class User {
 
     @Column
     private Byte age;
+    /*
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "communication_tables",joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "dog_id"))
@@ -27,14 +28,18 @@ public class User {
     JPA сгенерирует для нас имена таблиц и столбцов.
     Однако стратегия, которую использует JPA, не всегда соответствует используемым нами соглашениям об именах.
     Итак, нам нужна возможность настройки имен таблиц и столбцов.
-     */
+
+    private List<Dog> dogs;
+    */
+    @OneToMany
+    @JoinColumn(name = "user_id")
     private List<Dog> dogs;
 
     public User() {
 
     }
 
-    public User(Long id, String name, String lastName, Byte age,List<Dog> dogs) {
+    public User(Long id, String name, String lastName, Byte age, List<Dog> dogs) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -103,7 +108,8 @@ public class User {
                 .append(" lastName = ").append(lastName)
                 .append(" age = ").append(age)
                 .append(" dog = ").append(dogs)
-                .append("}");
+                .append("}")
+                .append("\n");
         return sb.toString();
     }
 }

@@ -6,15 +6,15 @@ import jm.task.core.jdbc.util.Util;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 public class UserDaoJDBCImpl implements UserDao {
     private static final Connection connection = Util.getConnection();
 
     public UserDaoJDBCImpl() {
 
     }
-
     public void update(Long id, String name, String lastName, byte age) {
         try (PreparedStatement ps = connection
                 .prepareStatement("UPDATE user SET name = ?, lastName = ?, age = ? WHERE id = ?;")) {
@@ -29,25 +29,6 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-
-//    public List<User> UniqueValue() {
-//        List<User> userList = null;
-//        try (Statement statement = connection.createStatement()) {
-//            userList = new ArrayList<>();
-//            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT name,lastname,age FROM user;");
-//            while (resultSet.next()) {
-//                userList.add(new User(
-//                        resultSet.getLong("id"),
-//                        resultSet.getString("name"),
-//                        resultSet.getString("lastName"),
-//                        resultSet.getByte("age")));
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return userList;
-//    }
 
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
@@ -116,20 +97,11 @@ public class UserDaoJDBCImpl implements UserDao {
             Long userId = rsUser.getLong(1);
 
             PreparedStatement psDog = connection
-                    .prepareStatement("INSERT INTO dog(name, age) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);
+                    .prepareStatement("INSERT INTO dog(name, age, user_id) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             psDog.setString(1, dogName);
             psDog.setByte(2, dogAge);
+            psDog.setLong(3, userId);
             psDog.executeUpdate();
-
-            ResultSet rsDog = psDog.getGeneratedKeys();
-            rsDog.next();
-            Long dogId = rsDog.getLong(1);
-
-            PreparedStatement psRelation = connection
-                    .prepareStatement("INSERT INTO communication_tables(user_id, dog_id) VALUES (?, ?);");
-            psRelation.setLong(1, userId);
-            psRelation.setLong(2, dogId);
-            psRelation.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -150,22 +122,31 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        List<Dog> dogList = new ArrayList<>();
+        Map<Long, Dog> dogMap = new HashMap<>();
         try (Statement statement1 = connection.createStatement();
              Statement statement2 = connection.createStatement()) {
             ResultSet resultUserSet = statement1.executeQuery("SELECT * FROM pre_project.user;");
             ResultSet resultDogSet = statement2.executeQuery("SELECT * FROM pre_project.dog;");
-            while (resultDogSet.next()) {
-                dogList.add(new Dog(resultDogSet.getLong("id"),
-                        resultDogSet.getString("name"),
-                        resultDogSet.getByte("age")));
-            }
             while (resultUserSet.next()) {
-                userList.add(new User(resultUserSet.getLong("id"),
+                User user;
+                user = new User(resultUserSet.getLong("id"),
                         resultUserSet.getString("name"),
                         resultUserSet.getString("lastName"),
                         resultUserSet.getByte("age"),
-                        dogList));
+                        new ArrayList<>());
+
+                while (resultDogSet.next()) {
+                    dogMap.put(resultDogSet.getLong("user_id"
+                    ), new Dog(resultDogSet.getLong("id"),
+                            resultDogSet.getString("name"),
+                            resultDogSet.getByte("age")));
+                }
+
+                dogMap.get(resultUserSet.getLong("id")).setUsers(user);
+
+                user.getDogs().add(dogMap.get(resultUserSet.getLong("id")));
+
+                userList.add(user);
             }
         } catch (SQLException e) {
             e.printStackTrace();

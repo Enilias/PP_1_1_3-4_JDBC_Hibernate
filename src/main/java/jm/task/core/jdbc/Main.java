@@ -18,28 +18,28 @@ public class Main {
 
         userService.createUsersTable();
         dogService.createDogTable();
-        userService.createCommunicationTables();
-        // userService.test();
+        // userService.createCommunicationTables();
 
 //        userService.saveUser("Lina","A", (byte) 1);
 //        userService.saveUser("Olya","B", (byte) 2);
 //        userService.saveUser("Ai","C", (byte) 3);
 //        userService.saveUser("Vika","D", (byte) 4);
 //        userService.update(1L, "WQDWCFWDCF", "IKJIK", (byte) 5);
-        // userService.saveUserAndDog("Eli","l",(byte) 52,);
-       //userService.saveUserAndDog("L1", "HAHAHA", 45, "L1", 45);
-        userService.saveUserAndDog("DOGHANTER12", "DOGHANTER12", 32,"DOGHANTER12",32);
+
+
+        //userService.saveUserAndDog("Eva", "H", 30,"Laki",2);
+
 
         System.out.println(userService.getAllUsers());
 
 //        userService.cleanCommunicationTables();
 //        userService.dropCommunicationTables();
+
+//        dogService.createDogTable();
+//        dogService.dropDogTable();
 //
 //        userService.cleanUsersTable();
 //        userService.dropUsersTable();
-//
-//        dogService.createDogTable();
-//        dogService.dropDogTable();
 
 
         //userService.dropCommunicationTables();
