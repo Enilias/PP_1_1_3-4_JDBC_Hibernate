@@ -19,8 +19,6 @@ public interface UserDao {
     void cleanUsersTable();
     void cleanCommunicationTables();
 
-    List<User> UniqueValue();
-
     void update(Long id, String name, String lastName, byte age);
 
     void saveUserAndDog(String name, String lastName, byte age, String dogName, byte dogAge);

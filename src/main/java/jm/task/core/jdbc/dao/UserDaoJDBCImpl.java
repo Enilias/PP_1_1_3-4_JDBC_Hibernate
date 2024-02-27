@@ -30,24 +30,24 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
 
-    public List<User> UniqueValue() {
-        List<User> userList = null;
-        try (Statement statement = connection.createStatement()) {
-            userList = new ArrayList<>();
-            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT name,lastname,age FROM user;");
-            while (resultSet.next()) {
-                userList.add(new User(
-                        resultSet.getLong("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("lastName"),
-                        resultSet.getByte("age")));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return userList;
-    }
+//    public List<User> UniqueValue() {
+//        List<User> userList = null;
+//        try (Statement statement = connection.createStatement()) {
+//            userList = new ArrayList<>();
+//            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT name,lastname,age FROM user;");
+//            while (resultSet.next()) {
+//                userList.add(new User(
+//                        resultSet.getLong("id"),
+//                        resultSet.getString("name"),
+//                        resultSet.getString("lastName"),
+//                        resultSet.getByte("age")));
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return userList;
+//    }
 
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
@@ -151,20 +151,31 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM pre_project.user;");
-            while (resultSet.next()) {
-                userList.add(new User(
-                        resultSet.getLong("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("lastName"),
-                        resultSet.getByte("age")));
+        List<Dog> dogList = new ArrayList<>();
+        try (Statement statement1 = connection.createStatement();
+             Statement statement2 = connection.createStatement()) {
+            ResultSet resultUserSet = statement1.executeQuery("SELECT * FROM pre_project.user;");
+            ResultSet resultDogSet = statement2.executeQuery("SELECT * FROM pre_project.dog;");
+            while (resultDogSet.next()) {
+                dogList.add(new Dog(resultDogSet.getLong("id"),
+                        resultDogSet.getString("name"),
+                        resultDogSet.getByte("age")));
+            }
+            while (resultUserSet.next()) {
+                userList.add(new User(resultUserSet.getLong("id"),
+                        resultUserSet.getString("name"),
+                        resultUserSet.getString("lastName"),
+                        resultUserSet.getByte("age"),
+                        dogList));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return userList;
     }
+
+
+
 
     public void cleanUsersTable() {
         try (Statement statement = connection.createStatement()) {

@@ -22,6 +22,11 @@ public class Dog {
         this.age = age;
         this.users = users;
     }
+    public Dog(Long id, String name, Byte age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
 
     public Dog(String name, Byte age) {
         this.name = name;
@@ -62,5 +67,14 @@ public class Dog {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Dog{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

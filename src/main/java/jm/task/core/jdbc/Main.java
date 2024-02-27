@@ -31,14 +31,14 @@ public class Main {
 
         System.out.println(userService.getAllUsers());
 
-//        userService.cleanCommunicationTables();
-//        userService.dropCommunicationTables();
-//
-//        userService.cleanUsersTable();
-//        userService.dropUsersTable();
-//
-//        dogService.createDogTable();
-//        dogService.dropDogTable();
+        userService.cleanCommunicationTables();
+        userService.dropCommunicationTables();
+
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
+
+        dogService.createDogTable();
+        dogService.dropDogTable();
 
 
         //userService.dropCommunicationTables();

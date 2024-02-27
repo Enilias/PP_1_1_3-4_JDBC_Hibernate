@@ -34,11 +34,12 @@ public class User {
 
     }
 
-    public User(Long id, String name, String lastName, Byte age) {
+    public User(Long id, String name, String lastName, Byte age,List<Dog> dogs) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.age = age;
+        this.dogs = dogs;
     }
 
     public User(String name, String lastName, Byte age) {
