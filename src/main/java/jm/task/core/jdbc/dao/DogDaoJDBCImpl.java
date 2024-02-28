@@ -41,7 +41,7 @@ public class DogDaoJDBCImpl implements DogDao {
         }
         System.out.printf("Dog с именем – %s добавлен в базу данных\n", name);
     }
-    public void cleanUsersTable() {
+    public void cleanDogTable() {
         try (Statement statement = connection.createStatement()) {
             statement.execute("TRUNCATE TABLE dog");
         } catch (SQLException e) {

@@ -24,7 +24,7 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public void cleanUsersTable() {
-        dogDao.cleanUsersTable();
+    public void cleanDogTable() {
+        dogDao.cleanDogTable();
     }
 }

@@ -27,15 +27,29 @@ public class Main {
 //        userService.update(1L, "WQDWCFWDCF", "IKJIK", (byte) 5);
 
 
-        //userService.saveUserAndDog("Eva", "H", 30,"Laki",2);
+        userService.saveUserAndDog("Eva", "A", 31, "BOBIK", 1);
+        userService.saveUserAndDog("Lina", "B", 32, "Rex", 1);
+        userService.saveUserAndDog("Sveta", "C", 33, "Tem", 2);
+        userService.saveUserAndDog("Hela", "D", 34, "Her", 3);
+        userService.saveUserAndDog("Oly", "E", 35, "Piny", 4);
+        userService.saveUserAndDog("DROP TABLE user","1",5,"g0",4);
+
+//        for (int i = 0; i < 1000; i++) {
+//            userService.saveUserAndDog("Eva", "A", 31, "BOBIK", 1);
+//            userService.saveUserAndDog("Lina", "B", 32, "Rex", 1);
+//            userService.saveUserAndDog("Sveta", "C", 33, "Tem", 2);
+//            userService.saveUserAndDog("Hela", "D", 34, "Her", 3);
+//            userService.saveUserAndDog("Oly", "E", 35, "Piny", 4);
+//
+//        }
 
 
         System.out.println(userService.getAllUsers());
 
-//        userService.cleanCommunicationTables();
+        // userService.cleanCommunicationTables();
 //        userService.dropCommunicationTables();
 
-//        dogService.createDogTable();
+//        dogService.cleanDogTable();
 //        dogService.dropDogTable();
 //
 //        userService.cleanUsersTable();
