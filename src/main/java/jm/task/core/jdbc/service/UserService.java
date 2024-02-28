@@ -21,6 +21,6 @@ public interface UserService {
     void cleanUsersTable();
     void cleanCommunicationTables();
 
-    public void update(Long id, String name, String lastName, byte age);
-    public void saveUserAndDog(String name, String lastName, int age, String dogName, int dogAge);
+    void update(Long id, String name, String lastName, byte age);
+    void saveUserAndDog(String name, String lastName, int age, List<Dog> dogs);
 }

@@ -21,7 +21,7 @@ public interface UserDao {
 
     void update(Long id, String name, String lastName, byte age);
 
-    void saveUserAndDog(String name, String lastName, byte age, String dogName, byte dogAge);
+    void saveUserAndDog(String name, String lastName, byte age, List<Dog> dogs);
 
     void createCommunicationTables();
 

@@ -85,7 +85,7 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public void saveUserAndDog(String name, String lastName, byte age, String dogName, byte dogAge) {
+    public void saveUserAndDog(String name, String lastName, byte age, List<Dog> dogs) {
 
     }
 

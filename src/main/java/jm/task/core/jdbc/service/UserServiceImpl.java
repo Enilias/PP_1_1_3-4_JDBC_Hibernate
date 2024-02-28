@@ -2,6 +2,7 @@ package jm.task.core.jdbc.service;
 
 import jm.task.core.jdbc.dao.UserDao;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.model.Dog;
 import jm.task.core.jdbc.model.User;
 
 import java.util.List;
@@ -52,11 +53,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUserAndDog(String name, String lastName, int age, String dogName, int dogAge) {
-        if (age < 172 || dogAge < 172) {
-            userDao.saveUserAndDog(name, lastName, (byte) age, dogName, (byte) dogAge);
-        } else {
-            System.out.println("Возрост не коректный");
-        }
+    public void saveUserAndDog(String name, String lastName, int age, List<Dog> dogs) {
+
+        userDao.saveUserAndDog(name, lastName, (byte) age, dogs);
+
     }
 }

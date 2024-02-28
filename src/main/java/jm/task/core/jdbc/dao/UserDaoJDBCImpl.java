@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 public class UserDaoJDBCImpl implements UserDao {
     private static final Connection connection = Util.getConnection();
 
     public UserDaoJDBCImpl() {
 
     }
+
     public void update(Long id, String name, String lastName, byte age) {
         try (PreparedStatement ps = connection
                 .prepareStatement("UPDATE user SET name = ?, lastName = ?, age = ? WHERE id = ?;")) {
@@ -83,7 +85,7 @@ public class UserDaoJDBCImpl implements UserDao {
         System.out.printf("User с именем – %s добавлен в базу данных\n", name);
     }
 
-    public void saveUserAndDog(String name, String lastName, byte age, String dogName, byte dogAge) {
+    public void saveUserAndDog(String name, String lastName, byte age, List<Dog> dogs) {
         try {
             PreparedStatement psUser = connection
                     .prepareStatement("INSERT INTO user(name, lastName, age) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
@@ -96,12 +98,14 @@ public class UserDaoJDBCImpl implements UserDao {
             rsUser.next();
             Long userId = rsUser.getLong(1);
 
-            PreparedStatement psDog = connection
-                    .prepareStatement("INSERT INTO dog(name, age, user_id) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
-            psDog.setString(1, dogName);
-            psDog.setByte(2, dogAge);
-            psDog.setLong(3, userId);
-            psDog.executeUpdate();
+            for (Dog dog : dogs) {
+                PreparedStatement psDog = connection
+                        .prepareStatement("INSERT INTO dog(name, age, user_id) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+                psDog.setString(1, dog.getName());
+                psDog.setByte(2, dog.getAge());
+                psDog.setLong(3, userId);
+                psDog.executeUpdate();
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -144,7 +148,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
                 dogMap.get(resultUserSet.getLong("id")).setUsers(user);
 
-                user.getDogs().add(dogMap.get(resultUserSet.getLong("id")));
+                 user.getDogs().add(dogMap.get(resultUserSet.getLong("id")));
 
                 userList.add(user);
             }
