@@ -43,7 +43,7 @@ public class DogDaoJDBCImpl implements DogDao {
     }
     public void cleanDogTable() {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("TRUNCATE TABLE dog");
+            statement.execute("TRUNCATE TABLE  dog");
         } catch (SQLException e) {
             e.printStackTrace();
         }

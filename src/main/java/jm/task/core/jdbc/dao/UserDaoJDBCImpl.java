@@ -126,29 +126,34 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        Map<Long, Dog> dogMap = new HashMap<>();
+        Map<Long, List<Dog>> dogMap = new HashMap<>();
         try (Statement statement1 = connection.createStatement();
              Statement statement2 = connection.createStatement()) {
             ResultSet resultUserSet = statement1.executeQuery("SELECT * FROM pre_project.user;");
             ResultSet resultDogSet = statement2.executeQuery("SELECT * FROM pre_project.dog;");
+
+            while (resultDogSet.next()) {
+                dogMap.putIfAbsent(resultDogSet.getLong("user_id"), new ArrayList<>());
+                dogMap.get(resultDogSet.getLong("user_id")).add(new Dog(resultDogSet.getLong("id"),
+                        resultDogSet.getString("name"),
+                        resultDogSet.getByte("age")));
+            }
+
             while (resultUserSet.next()) {
                 User user;
                 user = new User(resultUserSet.getLong("id"),
                         resultUserSet.getString("name"),
                         resultUserSet.getString("lastName"),
                         resultUserSet.getByte("age"),
-                        new ArrayList<>());
+                        null);
 
-                while (resultDogSet.next()) {
-                    dogMap.put(resultDogSet.getLong("user_id"
-                    ), new Dog(resultDogSet.getLong("id"),
-                            resultDogSet.getString("name"),
-                            resultDogSet.getByte("age")));
+
+                for (Map.Entry<Long, List<Dog>> dogEntry : dogMap.entrySet()) {
+                    if (resultUserSet.getLong("id") == dogEntry.getKey()) {
+                        user.setDogs(dogEntry.getValue());
+                    }
                 }
 
-                dogMap.get(resultUserSet.getLong("id")).setUsers(user);
-
-                 user.getDogs().add(dogMap.get(resultUserSet.getLong("id")));
 
                 userList.add(user);
             }

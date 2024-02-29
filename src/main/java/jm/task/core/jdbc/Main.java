@@ -48,8 +48,9 @@ public class Main {
 
 
         System.out.println(userService.getAllUsers());
+       // userService.dropUsersTable();
 
-        // userService.cleanCommunicationTables();
+//         userService.cleanCommunicationTables();
 //        userService.dropCommunicationTables();
 
         dogService.cleanDogTable();

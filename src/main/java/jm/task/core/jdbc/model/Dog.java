@@ -67,11 +67,11 @@ public class Dog {
         this.age = age;
     }
 
-    public User getUsers() {
+    public User getUser() {
         return user;
     }
 
-    public void setUsers(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -81,7 +81,7 @@ public class Dog {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", user=" + user.getName() +
+                ", user=" + user +
                 '}';
     }
 }
