@@ -1,8 +1,7 @@
 package jm.task.core.jdbc.model;
 
 import javax.persistence.*;
-import java.util.List;
-
+@SuppressWarnings("unused")
 @Entity
 @Table
 public class Dog {
