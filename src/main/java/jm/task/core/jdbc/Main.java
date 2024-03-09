@@ -35,7 +35,7 @@ public class Main {
         userService.saveUserAndDog("Lina", "B", 32, creationOfDogs("Rex", 5));
         userService.saveUserAndDog("Sveta", "C", 33, creationOfDogs("Sam", 9));
         userService.saveUserAndDog("Hela", "D", 34, creationOfDogs("Orfi", 15));
-        userService.saveUserAndDog("Oly", "E", 35, creationOfDogs("Helif", 23));
+        userService.saveUserAndDog(null, "E", 35, creationOfDogs("Helif", 23));
 
 //        for (int i = 0; i < 1000; i++) {
 //            userService.saveUserAndDog("Eva", "A", 31, "BOBIK", 1);
@@ -53,11 +53,11 @@ public class Main {
 //         userService.cleanCommunicationTables();
 //        userService.dropCommunicationTables();
 
-        dogService.cleanDogTable();
-        dogService.dropDogTable();
-
-        userService.cleanUsersTable();
-        userService.dropUsersTable();
+//        dogService.cleanDogTable();
+//        dogService.dropDogTable();
+//
+//        userService.cleanUsersTable();
+//        userService.dropUsersTable();
 
 
         //userService.dropCommunicationTables();
